@@ -13,6 +13,7 @@ $navigation_button_text_color: #474747;
 $table_text_color: #505050;
 $current_day_cell_color: #e9e9e9;
 $task_cell_color: #C1E4FF;
+$hover_cell_color: #f3f3f3;
 
 
 // Styles
@@ -49,7 +50,7 @@ $task_cell_color: #C1E4FF;
       text-shadow: 0px 1px 3px #363636;
       &:hover {
         cursor: pointer;
-        opacity: 0.5;
+        opacity: 0.8;
         transition-duration: 0.3s;
       }
     }
@@ -157,14 +158,27 @@ $task_cell_color: #C1E4FF;
       background-color: $current_day_cell_color;
     }
 
+    &:hover {
+      cursor: pointer;
+      background-color: $hover_cell_color;
+      transition-duration: 0.3s;
+    }
+
     &_marked {
       background-color: $task_cell_color;
+      &:hover {
+        background-color: #99d1f8;
+        transition-duration: 0.3s;
+      }
     }
   }
 
   &__task_header {
     font-weight: 600;
+    margin-top: 4px;
   }
-
-
+  &__task_issue {
+    font-weight: 400;
+    padding-top: 4px;
+  }
 }

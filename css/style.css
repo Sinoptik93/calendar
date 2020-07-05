@@ -52,7 +52,7 @@
 
 .header__event_buttons button:hover {
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.8;
   -webkit-transition-duration: 0.3s;
           transition-duration: 0.3s;
 }
@@ -201,10 +201,29 @@
   background-color: #e9e9e9;
 }
 
+.calendar__cell:hover {
+  cursor: pointer;
+  background-color: #f3f3f3;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
 .calendar__cell_marked {
   background-color: #C1E4FF;
 }
 
+.calendar__cell_marked:hover {
+  background-color: #99d1f8;
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+}
+
 .calendar__task_header {
   font-weight: 600;
+  margin-top: 4px;
+}
+
+.calendar__task_issue {
+  font-weight: 400;
+  padding-top: 4px;
 }
