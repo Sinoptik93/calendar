@@ -1,0 +1,23 @@
+{
+  "name": "calendar",
+  "version": "1.0.0",
+  "description": "Interactive calendar",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sinoptik93/calendar.git"
+  },
+  "keywords": [
+    "calendar",
+    "test"
+  ],
+  "author": "Chepukhin S.V.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sinoptik93/calendar/issues"
+  },
+  "homepage": "https://github.com/Sinoptik93/calendar#readme"
+}

@@ -1,10 +1,198 @@
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendar</title>
-</head>
-<body>
-  initial body
-</body>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="css/normolize.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  
+  <body>
+    <header class="header">
+      <div class="header__header_body container">
+        <div class="header__event_buttons">
+          <button class="header__add_event__button">Добавить</button>
+          <button class="header__update_button">Обновить</button>
+        </div>
+        <div class="header__search_form">
+          <img src="/img/search_icon.svg" alt="search_icon" class="header__search_icon">
+          <input type="text" placeholder="Событие, дата или участник." class="header__search_area">
+        </div>
+      </div>
+    </header>
+    
+    <div class="container">
+      <div class="navigation">
+        <div class="navigation__month_navigation">
+          <button class="navigation__prev_month_button navigation__change_month_button">◄</button>
+          <div class="navigation__current_month">Июль 2020</div>
+          <button class="navigation__next_month_button  navigation__change_month_button">►</button>
+        </div>
+        <button class="navigation__current_day_button">Сегодня</button>
+      </div>
+    </div>
+
+    <main class='calendar container'>
+      <table class="calendar__calendar_body">
+        <tbody>
+          <tr class="calendar__row">
+            <td class="calendar__cell calendar__cell_active">
+                <div class="calendar__cell_header">Понедельник, 29</div>
+                <div class="calendar__cell_task_body">
+                </div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">Вторник, 30</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">Среда, 1</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">Четверг, 2</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">Пятница, 3</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">Суббота, 4</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell calendar__cell_marked">
+              <div class="calendar__cell_header">Воскресенье, 5</div>
+              <div class="calendar__cell_task_body">
+                <div class="calendar__task_header">Закончить макет</div>
+                <div class="calendar__task_issue">Make minor fix at test task</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="calendar__row">
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">6</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">7</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">8</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">9</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">10</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">11</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">12</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+          </tr>
+          <tr class="calendar__row">
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">13</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">14</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">15</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">16</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">17</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">18</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">19</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+          </tr>
+          <tr class="calendar__row">
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">20</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">21</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">22</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">23</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">24</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header"></div>
+              <div class="calendar__cell_task_body">25</div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">26</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+          </tr>
+          <tr class="calendar__row">
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">27</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">28</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">29</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">30</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">31</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">1</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+            <td class="calendar__cell">
+              <div class="calendar__cell_header">2</div>
+              <div class="calendar__cell_task_body"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </body>
+
 </html>
