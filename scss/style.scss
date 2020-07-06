@@ -16,6 +16,36 @@ $task_cell_color: #C1E4FF;
 $hover_cell_color: #f3f3f3;
 
 
+// Styles mixin
+@mixin input_form_style {
+  border: 1px solid #a5a5a5;
+  border-radius: 3px;
+  padding-left: 5px;
+  font-family: $header_font;
+  font-size: 14px;
+  box-shadow: inset 0 0 2px #363636;
+
+  &::placeholder {
+    font-family: $header_font;
+    font-size: 13px;
+ }
+}
+
+@mixin form_button_style {
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-family: $header_font;
+  font-weight: 400;
+  font-size: 13px;
+  color: $navigation_button_text_color;
+  &:hover {
+    border: 1px solid #47474780;
+    color: #000000;
+    transition-duration: 0.3s;
+  }
+}
+
 // Styles
 .container {
   max-width: 1000px;
@@ -68,17 +98,7 @@ $hover_cell_color: #f3f3f3;
  &__search_area {
     width: 200px;
     height: 28px;
-    border: 1px solid #a5a5a5;
-    border-radius: 3px;
-    padding-left: 5px;
-    font-family: $header_font;
-    font-size: 14px;
-    box-shadow: inset 0 0 2px #363636;
-
-   &::placeholder {
-      font-family: $header_font;
-      font-size: 13px;
-   }
+    @include input_form_style();
  }
 }
 
@@ -115,15 +135,7 @@ $hover_cell_color: #f3f3f3;
   &__current_day_button {
     width: 60px;
     display: inline-block;
-    font-family: $header_font;
-    font-weight: 400;
-    font-size: 13px;
-    color: $navigation_button_text_color;
-    &:hover {
-      border: 1px solid #474747;
-      color: #000000;
-      transition-duration: 0.3s;
-    }
+    @include form_button_style();
   }
 }
 
@@ -181,5 +193,86 @@ $hover_cell_color: #f3f3f3;
   &__task_issue {
     font-weight: 400;
     padding-top: 4px;
+  }
+}
+
+.task_adjunction_popup {
+  display: none;
+  left: 10px;
+  position: relative;
+  
+  // Decorate element
+  &:after {
+    content: " ";
+    position: absolute;
+    transform: rotate(45deg);
+    width: 36px;
+    height: 36px;
+    top: 10px;
+    background-color: #fff;
+    border: none;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    transform: rotate(45deg);
+    width: 36px;
+    height: 36px;
+    top: 10px;
+    z-index: -1;
+    box-shadow: 0px 0px 5px 0px #000000bf;
+  }
+
+  &__close_button {
+    position: absolute;
+    top: 5px;
+    left: 270px;
+    z-index: 2;
+    cursor: pointer;
+    color: #555555;
+
+    &:hover {
+      color: #000000;
+      transition: 0.3s;
+    }
+  }
+  &__body {
+    display: flex;
+    margin: 10px;
+    width: 280px;
+    height: 320px;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px 0px #000000bf;
+  }
+  &__form_body {
+    margin: 20px;
+    margin-top: 30px;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  input {
+    @include input_form_style();
+  }
+  &__task_description {
+    margin-top: 20px;
+    height: 120px;
+    resize: none;
+
+    @include input_form_style();
+  }
+  &__buttons_area {
+    display: flex;
+    justify-content: space-between;
+    & button {
+      @include form_button_style();
+      color: #000000;
+      &:hover {
+        background-color: #006fca;
+        color: #ffffff;
+      }
+    }
   }
 }
