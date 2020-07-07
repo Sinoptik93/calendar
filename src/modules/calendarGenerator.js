@@ -42,7 +42,7 @@ const createTaskCell = (inputDate, dayOfTheWeek = null) => {
   return cellBody;
 };
 
-const generateCalendar = (date, elementId = 'calendar') => {
+const generateCalendar = (date = Date.now(), elementId = 'calendar') => {
   const tableRows = 5;
   const targetContainer = document.getElementById(elementId);
   const calendar = document.createElement('table');

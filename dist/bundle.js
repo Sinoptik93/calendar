@@ -17819,14 +17819,10 @@ function toDate(argument) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/calendarGenerator.js */ "./src/modules/calendarGenerator.js");
+/* harmony import */ var _modules_renderCalendar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/renderCalendar.js */ "./src/modules/renderCalendar.js");
+ // Initial render
 
-var currentDate = new Date(Date.now());
-console.log('Current Date');
-console.group();
-console.log(currentDate);
-console.groupEnd();
-Object(_modules_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(currentDate);
+Object(_modules_renderCalendar_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
 
 /***/ }),
 
@@ -17873,7 +17869,8 @@ var createTaskCell = function createTaskCell(inputDate) {
   return cellBody;
 };
 
-var generateCalendar = function generateCalendar(date) {
+var generateCalendar = function generateCalendar() {
+  var date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Date.now();
   var elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'calendar';
   var tableRows = 5;
   var targetContainer = document.getElementById(elementId);
@@ -17913,6 +17910,58 @@ var generateCalendar = function generateCalendar(date) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (generateCalendar);
+
+/***/ }),
+
+/***/ "./src/modules/renderCalendar.js":
+/*!***************************************!*\
+  !*** ./src/modules/renderCalendar.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+/* harmony import */ var _calendarGenerator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./calendarGenerator.js */ "./src/modules/calendarGenerator.js");
+
+ // Navigation buttons elements
+
+var previousMonthButton = document.getElementsByClassName('navigation__prev_month_button')[0];
+var nextMonthButton = document.getElementsByClassName('navigation__next_month_button')[0];
+var currentDayButton = document.getElementsByClassName('navigation__current_day_button')[0];
+var currentDate = new Date(Date.now());
+var targetDate = currentDate;
+var monthsOfTheYear = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+var renderCalendar = function renderCalendar() {
+  var date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Date.now();
+  var navigationArea = document.getElementsByClassName('navigation__current_month')[0];
+  var calendarArea = document.getElementsByClassName('calendar__calendar_table')[0];
+  var targetMonth = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getMonth"])(date);
+  var targetYear = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getYear"])(date);
+  navigationArea.textContent = "".concat(monthsOfTheYear[targetMonth], " ").concat(targetYear);
+
+  if (calendarArea !== undefined) {
+    calendarArea.remove();
+  }
+
+  Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_1__["default"])(date);
+}; // Navigation buttons event listener
+
+
+previousMonthButton.addEventListener('click', function () {
+  targetDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["setMonth"])(targetDate, Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getMonth"])(targetDate) - 1);
+  renderCalendar(targetDate);
+});
+nextMonthButton.addEventListener('click', function () {
+  targetDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["setMonth"])(targetDate, Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getMonth"])(targetDate) + 1);
+  renderCalendar(targetDate);
+});
+currentDayButton.addEventListener('click', function () {
+  renderCalendar();
+});
+/* harmony default export */ __webpack_exports__["default"] = (renderCalendar);
 
 /***/ })
 
