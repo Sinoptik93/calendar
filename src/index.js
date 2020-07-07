@@ -1,4 +1,4 @@
-import renderCalendar from './modules/renderCalendar.js' 
+import renderCalendar from './modules/renderCalendar.js';
 
 // Initial render
 renderCalendar();

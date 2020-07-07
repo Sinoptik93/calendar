@@ -35,7 +35,6 @@ const renderCalendar = (date = Date.now()) => {
   if (calendarArea !== undefined) {
     calendarArea.remove();
   }
-  
   generateCalendar(date);
 }
 

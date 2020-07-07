@@ -1,3 +1,4 @@
+import addEventPopup from './eventPopup.js';
 import { setDay, setDate, getDate, isSameDay } from 'date-fns';
 
 const daysOfTheWeek = [
@@ -38,6 +39,12 @@ const createTaskCell = (inputDate, dayOfTheWeek = null) => {
   cellTaskBody.appendChild(cellTaskIssue);
   cellBody.appendChild(cellHeader);
   cellBody.appendChild(cellTaskBody)
+  
+  // Popup event listener for each cell
+  cellBody.addEventListener('click', () => {
+    cellBody.classList.add('calendar__cell_formating');
+    addEventPopup();
+  });
 
   return cellBody;
 };

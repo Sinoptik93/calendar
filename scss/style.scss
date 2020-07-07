@@ -14,6 +14,7 @@ $table_text_color: #505050;
 $current_day_cell_color: #e9e9e9;
 $task_cell_color: #c1e4ff;
 $hover_cell_color: #f3f3f3;
+$formating_cell_color: #a6d8ff;
 
 // Table config:
 $row_height: 120px;
@@ -177,7 +178,10 @@ $row_height: 120px;
       font-weight: 500;
       background-color: $current_day_cell_color;
     }
-
+    &_formating {
+      border: 3px solid #84caff;
+      background-color: $formating_cell_color;
+    }
     &:hover {
       cursor: pointer;
       background-color: $hover_cell_color;
@@ -204,34 +208,22 @@ $row_height: 120px;
 }
 
 .task_adjunction_popup {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  top: -25px;
-  left: 148px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1;
-
-  // Decorate element
-  &:after {
-    content: " ";
-    position: absolute;
-    transform: rotate(45deg);
-    width: 36px;
-    height: 36px;
-    top: 20px;
-    background-color: #fff;
-    border: none;
+  &__background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
   }
-  &:before {
-    content: "";
-    position: absolute;
-    transform: rotate(45deg);
-    width: 36px;
-    height: 36px;
-    top: 20px;
-    z-index: -1;
-    box-shadow: 0px 0px 5px 0px #000000bf;
-  }
-
   &__close_button {
     position: absolute;
     top: 15px;

@@ -17835,7 +17835,9 @@ Object(_modules_renderCalendar_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+/* harmony import */ var _eventPopup_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./eventPopup.js */ "./src/modules/eventPopup.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+
 
 var daysOfTheWeek = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]; // Create element with class
 
@@ -17848,7 +17850,7 @@ var createElemWithClass = function createElemWithClass(elementTagName, className
 
 var createTaskCell = function createTaskCell(inputDate) {
   var dayOfTheWeek = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var cellDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getDate"])(inputDate);
+  var cellDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["getDate"])(inputDate);
   var currentDate = Date.now(); // Cell elements construct
 
   var cellBody = createElemWithClass('td', 'calendar__cell');
@@ -17858,14 +17860,19 @@ var createTaskCell = function createTaskCell(inputDate) {
   var cellTaskHeader = createElemWithClass('div', 'calendar__task_header');
   var cellTaskIssue = createElemWithClass('div', 'calendar__task_issue'); // Current day mark style
 
-  if (Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["isSameDay"])(currentDate, inputDate)) {
+  if (Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["isSameDay"])(currentDate, inputDate)) {
     cellBody.classList.add('calendar__cell_active');
   }
 
   cellTaskBody.appendChild(cellTaskHeader);
   cellTaskBody.appendChild(cellTaskIssue);
   cellBody.appendChild(cellHeader);
-  cellBody.appendChild(cellTaskBody);
+  cellBody.appendChild(cellTaskBody); // Popup event listener for each cell
+
+  cellBody.addEventListener('click', function () {
+    cellBody.classList.add('calendar__cell_formating');
+    Object(_eventPopup_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  });
   return cellBody;
 };
 
@@ -17878,7 +17885,7 @@ var generateCalendar = function generateCalendar() {
   calendar.setAttribute('class', 'calendar__calendar_table');
   var calendarBody = document.createElement('tbody');
   calendarBody.setAttribute('class', 'calendar__calendar_body');
-  var calendarFirstDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["setDay"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["setDate"])(date, 1), 1, {
+  var calendarFirstDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["setDay"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["setDate"])(date, 1), 1, {
     weekStartsOn: 0
   });
   var currentDate = calendarFirstDate;
@@ -17892,13 +17899,13 @@ var generateCalendar = function generateCalendar() {
       for (var currentDayOfWeek = 0; currentDayOfWeek < 7; currentDayOfWeek += 1) {
         currentTaskCell = createTaskCell(currentDate);
         currentRow.appendChild(currentTaskCell);
-        currentDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["setDate"])(currentDate, Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getDate"])(currentDate) + 1);
+        currentDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["setDate"])(currentDate, Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["getDate"])(currentDate) + 1);
       }
     } else {
       for (var _currentDayOfWeek = 0; _currentDayOfWeek < 7; _currentDayOfWeek += 1) {
         currentTaskCell = createTaskCell(currentDate, daysOfTheWeek[_currentDayOfWeek]);
         currentRow.appendChild(currentTaskCell);
-        currentDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["setDate"])(currentDate, Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getDate"])(currentDate) + 1);
+        currentDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["setDate"])(currentDate, Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["getDate"])(currentDate) + 1);
       }
     }
 
@@ -17910,6 +17917,41 @@ var generateCalendar = function generateCalendar() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (generateCalendar);
+
+/***/ }),
+
+/***/ "./src/modules/eventPopup.js":
+/*!***********************************!*\
+  !*** ./src/modules/eventPopup.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var main = document.getElementsByClassName('calendar')[0];
+var popupForm = document.createElement('div');
+
+var showEventPopup = function showEventPopup() {
+  var popupHTML = "\n  <div class=\"task_adjunction_popup\">\n    <div class=\"task_adjunction_popup__body\">\n      <div class=\"task_adjunction_popup__close_button\">\u2715</div>\n      <form action=\"\" class=\"task_adjunction_popup__form_body\">\n        <input type=\"text\" name=\"task_name\" class=\"task__adjunction_popup__task_name\" placeholder=\"\u0421\u043E\u0431\u044B\u0442\u0438\u0435\">\n        <input type=\"text\" name=\"date\" class=\"task__adjunction_popup__task_date\" placeholder=\"\u0414\u0435\u043D\u044C, \u043C\u0435\u0441\u044F\u0446, \u0433\u043E\u0434\">\n        <input type=\"text\" name=\"members\" class=\"task__adjunction_popup__task_members\" placeholder=\"\u0418\u043C\u0435\u043D\u0430 \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u043E\u0432\">\n        <textarea rows=\"6\" name=\"description\" class=\"task_adjunction_popup__task_description\" placeholder=\"\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435\"></textarea>\n        <div class=\"task_adjunction_popup__buttons_area\">\n          <button class=\"task__adjunction_popup__accept_button\">\u0413\u043E\u0442\u043E\u0432\u043E</button>\n          <button class=\"task__adjunction_popup__delete_button\">\u0423\u0434\u0430\u043B\u0438\u0442\u044C</button>\n        </div>\n      </form>\n    </div>\n  </div>\n  ";
+  popupForm.setAttribute('class', 'task_adjunction_popup__background');
+  popupForm.innerHTML = popupHTML;
+  main.appendChild(popupForm);
+  var closeButton = document.getElementsByClassName('task_adjunction_popup__close_button')[0];
+  closeButton.addEventListener('click', function () {
+    var formattingCell = document.getElementsByClassName('calendar__cell_formating')[0];
+    formattingCell.classList.remove('calendar__cell_formating');
+    popupForm.remove();
+  });
+  var background = document.getElementsByClassName('task_adjunction_popup__background')[0];
+  background.addEventListener('click', function () {
+    var formattingCell = document.getElementsByClassName('calendar__cell_formating')[0];
+    formattingCell.classList.remove('calendar__cell_formating');
+    popupForm.remove();
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (showEventPopup);
 
 /***/ }),
 
