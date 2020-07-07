@@ -172,6 +172,10 @@
   margin-top: 20px;
 }
 
+.calendar__row {
+  height: 120px;
+}
+
 .calendar__calendar_table {
   table-layout: fixed;
   width: 100%;
@@ -184,7 +188,6 @@
 .calendar__cell {
   vertical-align: top;
   border: 1px solid #bebebe;
-  height: calc(100% / 5);
 }
 
 .calendar__cell_body {
@@ -259,7 +262,7 @@
 }
 
 .task_adjunction_popup:before {
-  content: '';
+  content: "";
   position: absolute;
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);

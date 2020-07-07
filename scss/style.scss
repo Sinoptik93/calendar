@@ -15,6 +15,9 @@ $current_day_cell_color: #e9e9e9;
 $task_cell_color: #c1e4ff;
 $hover_cell_color: #f3f3f3;
 
+// Table config:
+$row_height: 120px;
+
 // Styles mixin
 @mixin input_form_style {
   border: 1px solid #a5a5a5;
@@ -140,19 +143,20 @@ $hover_cell_color: #f3f3f3;
 
 .calendar {
   margin-top: 20px;
+  &__row {
+    height: $row_height;
+  }
   &__calendar_table {
     table-layout: fixed;
     width: 100%;
     height: 590px;
     border-collapse: collapse;
-
     font-family: $table_font;
     color: $table_text_color;
   }
   &__cell {
     vertical-align: top;
-    border: 1px solid #bebebe;
-    height: calc(100% / 5);
+    border: 1px solid #bebebe;   
     &_body {
       position: relative;
       width: 100%;
@@ -205,7 +209,7 @@ $hover_cell_color: #f3f3f3;
   top: -25px;
   left: 148px;
   z-index: 1;
-  
+
   // Decorate element
   &:after {
     content: " ";
@@ -218,7 +222,7 @@ $hover_cell_color: #f3f3f3;
     border: none;
   }
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     transform: rotate(45deg);
     width: 36px;
