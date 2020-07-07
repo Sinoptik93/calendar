@@ -34,8 +34,8 @@
     </div>
 
     <main class='calendar container'>
-      <table class="calendar__calendar_body">
-        <tbody>
+      <table class="calendar__calendar_table">
+        <tbody class="calendar__calendar_body">
           <tr class="calendar__row">
             <td class="calendar__cell calendar__cell_active">
                 <div class="calendar__cell_header">Понедельник, 29</div>
@@ -43,6 +43,7 @@
                 </div>
             </td>
             <td class="calendar__cell">
+              <div class="calendar__cell_body">
               <div class="calendar__cell_header">Вторник, 30</div>
               <div class="calendar__cell_task_body"></div>
             </td>
@@ -67,7 +68,7 @@
               <div class="calendar__cell_task_body">
                 <div class="calendar__task_header">Закончить макет</div>
                 <div class="calendar__task_issue">Make minor fix at test task</div>
-              </div>
+                </div>
             </td>
           </tr>
           <tr class="calendar__row">
@@ -193,7 +194,8 @@
         </tbody>
       </table>
     </main>
-    <div class="task_adjunction_popup">
+
+    <!-- <div class="task_adjunction_popup">
       <div class="task_adjunction_popup__body">
         <div class="task_adjunction_popup__close_button">✕</div>
         <form action="" class="task_adjunction_popup__form_body">
@@ -207,7 +209,8 @@
           </div>
         </form>
       </div>
-    </div>
+    </div> -->
+
     <script type="text/javascript" src="./js/index.js"></script>
   </body>
 </html>
