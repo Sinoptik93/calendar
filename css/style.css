@@ -146,7 +146,7 @@
 
 .navigation__current_month {
   max-width: 90px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .navigation__current_day_button {
@@ -172,7 +172,7 @@
   margin-top: 20px;
 }
 
-.calendar__calendar_body {
+.calendar__calendar_table {
   table-layout: fixed;
   width: 100%;
   height: 590px;
@@ -185,6 +185,11 @@
   vertical-align: top;
   border: 1px solid #bebebe;
   height: calc(100% / 5);
+}
+
+.calendar__cell_body {
+  position: relative;
+  width: 100%;
 }
 
 .calendar__cell_header {
@@ -214,7 +219,7 @@
 }
 
 .calendar__cell_marked {
-  background-color: #C1E4FF;
+  background-color: #c1e4ff;
 }
 
 .calendar__cell_marked:hover {
@@ -234,9 +239,11 @@
 }
 
 .task_adjunction_popup {
-  display: none;
-  left: 10px;
-  position: relative;
+  display: block;
+  position: absolute;
+  top: -25px;
+  left: 148px;
+  z-index: 1;
 }
 
 .task_adjunction_popup:after {
@@ -246,7 +253,7 @@
           transform: rotate(45deg);
   width: 36px;
   height: 36px;
-  top: 10px;
+  top: 20px;
   background-color: #fff;
   border: none;
 }
@@ -258,7 +265,7 @@
           transform: rotate(45deg);
   width: 36px;
   height: 36px;
-  top: 10px;
+  top: 20px;
   z-index: -1;
   -webkit-box-shadow: 0px 0px 5px 0px #000000bf;
           box-shadow: 0px 0px 5px 0px #000000bf;
@@ -266,7 +273,7 @@
 
 .task_adjunction_popup__close_button {
   position: absolute;
-  top: 5px;
+  top: 15px;
   left: 270px;
   z-index: 2;
   cursor: pointer;
@@ -339,8 +346,8 @@
 }
 
 .task_adjunction_popup__task_description {
-  margin-top: 20px;
   height: 120px;
+  margin-top: 20px;
   resize: none;
   border: 1px solid #a5a5a5;
   border-radius: 3px;
