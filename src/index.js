@@ -1,7 +1,10 @@
 import generateCalendar from './modules/calendarGenerator.js';
 
-const monthsOfTheYear = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
-const currentMonth = new Date(Date.now()).getMonth()
-console.log(monthsOfTheYear[currentMonth])
+const currentDate = new Date(Date.now());
 
-generateCalendar(currentMonth);
+console.log('Current Date')
+console.group();
+console.log(currentDate);
+console.groupEnd();
+
+generateCalendar(currentDate);
