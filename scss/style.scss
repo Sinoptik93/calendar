@@ -106,7 +106,7 @@ $row_height: 120px;
 
 .navigation {
   margin-top: 20px;
-  width: 220px;
+  width: 260px;
   display: flex;
   justify-content: space-between;
   & button {
@@ -120,7 +120,7 @@ $row_height: 120px;
     }
   }
   &__month_navigation {
-    width: 150px;
+    width: 180px;
     display: flex;
     justify-content: space-between;
   }
@@ -130,7 +130,7 @@ $row_height: 120px;
     color: $navigation_button_text_color;
   }
   &__current_month {
-    max-width: 90px;
+    max-width: 120px;
 
     font-family: "Roboto", sans-serif;
   }

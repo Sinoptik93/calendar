@@ -107,7 +107,7 @@
 
 .navigation {
   margin-top: 20px;
-  width: 220px;
+  width: 260px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -129,7 +129,7 @@
 }
 
 .navigation__month_navigation {
-  width: 150px;
+  width: 180px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -145,7 +145,7 @@
 }
 
 .navigation__current_month {
-  max-width: 90px;
+  max-width: 120px;
   font-family: "Roboto", sans-serif;
 }
 
