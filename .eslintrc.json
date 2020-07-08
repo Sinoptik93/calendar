@@ -3,13 +3,17 @@
         "browser": true,
         "es2020": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "airbnb-base"
+    ],
     "parserOptions": {
         "ecmaVersion": 11,
         "sourceType": "module"
     },
     "rules": {
         "no-console": 0,
-        "import/extensions": 0
+        "import/extensions": 0,
+        "no-restricted-syntax": ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"]
     }
 }
