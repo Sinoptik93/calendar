@@ -52216,7 +52216,6 @@ __webpack_require__.r(__webpack_exports__);
  // Initial render
 
 Object(_modules_renderCalendar_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
-Object(_modules_search_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
 
 /***/ }),
 
@@ -52230,9 +52229,7 @@ Object(_modules_search_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
-/* harmony import */ var date_fns_locale__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/locale */ "./node_modules/date-fns/esm/locale/index.js");
-/* harmony import */ var _eventPopup_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./eventPopup.js */ "./src/modules/eventPopup.js");
-
+/* harmony import */ var _eventPopup_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./eventPopup.js */ "./src/modules/eventPopup.js");
 
 
 var daysOfTheWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']; // Create element with class
@@ -52282,17 +52279,9 @@ var createTaskCell = function createTaskCell(inputDate) {
   cellBody.appendChild(cellHeader);
   cellBody.appendChild(cellTaskBody); // Popup event listener for each cell
 
-  cellBody.addEventListener('click', function () {
-    cellBody.classList.add('calendar__cell_formating');
-    Object(_eventPopup_js__WEBPACK_IMPORTED_MODULE_2__["default"])(dataDate);
-    var formDateArea = document.getElementsByClassName('task_adjunction_popup__task_date')[0]; // Input form style
-
-    var localizedDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["format"])(inputDate, 'd, MMMM, yyyy', {
-      locale: date_fns_locale__WEBPACK_IMPORTED_MODULE_1__["ru"]
-    }); // #1
-    // const localizedDate = format(inputDate, 'd MMMM yyyy', { locale: ru }) // #2
-
-    formDateArea.setAttribute('value', localizedDate);
+  cellBody.addEventListener('click', function (event) {
+    var cellDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(cellBody.getAttribute('data-date'));
+    Object(_eventPopup_js__WEBPACK_IMPORTED_MODULE_1__["default"])(cellDate);
   });
   return cellBody;
 };
@@ -52389,9 +52378,24 @@ var showEventPopup = function showEventPopup() {
   popupForm.setAttribute('class', 'task_adjunction_popup__background');
   popupForm.innerHTML = popupHTML;
   main.appendChild(popupForm);
+  var markedCell = document.querySelector("[data-date=\"".concat(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["formatISO"])(cellDate, {
+    representation: 'date'
+  }), "\"]"));
+  markedCell.classList.add('calendar__cell_formating');
+  var formDateArea = document.getElementsByClassName('task_adjunction_popup__task_date')[0]; // Input form style
 
-  if (localStorage.getItem(cellDate) !== null) {
-    var data = JSON.parse(localStorage.getItem(cellDate)); // Styled popup area elements!!!
+  var localizedDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["format"])(cellDate, 'd, MMMM, yyyy', {
+    locale: date_fns_locale__WEBPACK_IMPORTED_MODULE_1__["ru"]
+  }); // #1
+  // const localizedDate = format(cellDate, 'd MMMM yyyy', { locale: ru }) // #2
+
+  formDateArea.setAttribute('value', localizedDate);
+  var unifiedCellDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["formatISO"])(cellDate, {
+    representation: 'date'
+  });
+
+  if (localStorage.getItem(unifiedCellDate) !== null) {
+    var data = JSON.parse(localStorage.getItem(unifiedCellDate)); // Styled popup area elements!!!
 
     var styledTaskName = document.createElement('div');
     styledTaskName.setAttribute('class', 'task_adjunction_popup__styled_header');
@@ -52421,13 +52425,13 @@ var showEventPopup = function showEventPopup() {
   acceptButton.addEventListener('click', function (event) {
     event.preventDefault();
     generateLocalState();
-    Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(cellDate));
+    Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_2__["default"])(cellDate);
   });
   var deleteButton = document.getElementsByClassName('task__adjunction_popup__delete_button')[0];
   deleteButton.addEventListener('click', function (event) {
     event.preventDefault();
-    localStorage.removeItem(cellDate);
-    Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(cellDate));
+    localStorage.removeItem(unifiedCellDate);
+    Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_2__["default"])(cellDate);
   });
 };
 
@@ -52496,6 +52500,22 @@ currentDayButton.addEventListener('click', function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+/* harmony import */ var date_fns_locale__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/locale */ "./node_modules/date-fns/esm/locale/index.js");
+/* harmony import */ var _renderCalendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./renderCalendar.js */ "./src/modules/renderCalendar.js");
+/* harmony import */ var _eventPopup_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./eventPopup.js */ "./src/modules/eventPopup.js");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -52508,12 +52528,127 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+
+
+
+
 var inputSearchForm = document.getElementsByClassName('header__search_area')[0];
 var resultsMenu = document.getElementsByClassName('search_results')[0];
 var closeButton = document.getElementsByClassName('header__search_form_close_button')[0];
+
+var parseLocalStorage = function parseLocalStorage(storage) {
+  var result = [];
+  var storageItems = Object.entries(storage);
+  storageItems.forEach(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        itemKey = _ref2[0],
+        itemValue = _ref2[1];
+
+    var parsedItemValue = JSON.parse(itemValue);
+    result.push(_defineProperty({}, itemKey, parsedItemValue));
+  });
+  return result;
+}; // Too long string
+// const normolizeStorage = (parsedStorage) => parsedStorage.reduce((acc, item) => ([...acc, Object.values(item)[0]]), []);
+
+
+var normolizeStorage = function normolizeStorage(parsedStorage) {
+  var result = parsedStorage.reduce(function (acc, item) {
+    return [].concat(_toConsumableArray(acc), [Object.values(item)[0]]);
+  }, []);
+  return result;
+};
+
+var filterData = function filterData(data, searchExpression) {
+  var updatedData = []; // Keys for compared searching string
+
+  var comparedKeys = ['taskName', 'taskDate', 'taskMembers'];
+  var searchingChars = new RegExp(searchExpression, 'i');
+
+  if (searchExpression === '') {
+    return data;
+  } // Add compared string to object
+
+
+  var _iterator = _createForOfIteratorHelper(data),
+      _step;
+
+  try {
+    var _loop = function _loop() {
+      var item = _step.value;
+      var comparedString = comparedKeys.reduce(function (acc, key) {
+        return "".concat(acc, " ").concat(item[key]);
+      }, '');
+      item.comparedString = "".concat(comparedString, " ").concat(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["format"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(item.taskDate), 'dd MMMM', {
+        locale: date_fns_locale__WEBPACK_IMPORTED_MODULE_1__["ru"]
+      }));
+      updatedData.push(item);
+    };
+
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      _loop();
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  var filteredData = updatedData.filter(function (item) {
+    var result = item.comparedString.match(searchingChars);
+    return result !== null;
+  });
+  return filteredData;
+};
+
+var createResultElement = function createResultElement(data) {
+  var resultTaskBody = document.createElement('div');
+  resultTaskBody.setAttribute('class', 'search_results__task_body');
+  resultTaskBody.setAttribute('data-result-link', data.taskDate);
+  var resultTaskHeader = document.createElement('div');
+  resultTaskHeader.setAttribute('class', 'search_results__task_header');
+  resultTaskHeader.textContent = data.taskName;
+  var resultTaskDate = document.createElement('div');
+  resultTaskDate.setAttribute('class', 'search_results__task_date');
+  resultTaskDate.textContent = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["format"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(data.taskDate), 'dd MMMM', {
+    locale: date_fns_locale__WEBPACK_IMPORTED_MODULE_1__["ru"]
+  });
+  resultTaskBody.appendChild(resultTaskHeader);
+  resultTaskBody.appendChild(resultTaskDate); // Folowing link action
+
+  resultTaskBody.addEventListener('click', function (event) {
+    var currentElement = event.target.closest('[data-result-link]');
+    var targetDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(currentElement.getAttribute('data-result-link'));
+    Object(_renderCalendar_js__WEBPACK_IMPORTED_MODULE_2__["default"])(targetDate); // Clear input & result search form
+
+    inputSearchForm.value = '';
+    resultsMenu.style.display = 'none';
+    closeButton.style.display = 'none';
+    Object(_eventPopup_js__WEBPACK_IMPORTED_MODULE_3__["default"])(targetDate);
+  });
+  return resultTaskBody;
+};
+
+var dynamicSearch = function dynamicSearch(storage) {
+  var searchExpression = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var outputArea = document.getElementsByClassName('search_results')[0];
+  outputArea.innerHTML = '';
+  var parsedStorageData = parseLocalStorage(storage);
+  var normolizedStorageData = normolizeStorage(parsedStorageData);
+  var filteredStorage = filterData(normolizedStorageData, searchExpression);
+  filteredStorage.forEach(function (itemData) {
+    outputArea.appendChild(createResultElement(itemData));
+  });
+};
+
 inputSearchForm.addEventListener('focus', function () {
   resultsMenu.style.display = 'flex';
   closeButton.style.display = 'block';
+  dynamicSearch(localStorage);
+});
+inputSearchForm.addEventListener('input', function (event) {
+  var searchingExpression = event.target.value;
+  dynamicSearch(localStorage, searchingExpression);
 }); // inputSearchForm.addEventListener('blur', () => {
 //   resultsMenu.style.display = 'none';
 //   closeButton.style.display = 'none';
@@ -52524,44 +52659,6 @@ closeButton.addEventListener('click', function () {
   resultsMenu.style.display = 'none';
   closeButton.style.display = 'none';
 });
-
-var parseLocalStorage = function parseLocalStorage(storage) {
-  var result = [];
-  var storageItems = Object.values(storage);
-
-  for (var _i = 0, _storageItems = storageItems; _i < _storageItems.length; _i++) {
-    var value = _storageItems[_i];
-    var searchingString = [];
-    var pasedItem = JSON.parse(value);
-
-    for (var _ref in pasedItem) {
-      var _ref2 = _slicedToArray(_ref, 2);
-
-      var parsedKey = _ref2[0];
-      var parsedValue = _ref2[1];
-      searchingString.push({
-        parsedKey: parsedValue
-      });
-    }
-
-    result.push("".concat({
-      searchingString: searchingString,
-      data: pasedItem
-    }));
-  }
-
-  return result;
-};
-
-var dynamicSearch = function dynamicSearch() {
-  var searchArea = document.getElementsByClassName('header__search_area')[0];
-  var parsedCurrentStorage = parseLocalStorage(localStorage);
-  searchArea.addEventListener('input', function (event) {
-    var inputValue = event.target.value;
-    parsedCurrentStorage.forEach(function (currentEvent) {});
-  });
-};
-
 /* harmony default export */ __webpack_exports__["default"] = (dynamicSearch);
 
 /***/ })

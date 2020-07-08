@@ -1,6 +1,5 @@
-import { setDay, setDate, getDate, isSameDay, format, formatISO } from 'date-fns';
-import { ru } from 'date-fns/locale';
-import addEventPopup from './eventPopup.js';
+import { setDay, setDate, getDate, isSameDay, formatISO, parseISO } from 'date-fns';
+import showEventPopup from './eventPopup.js';
 
 const daysOfTheWeek = [
   'Понедельник',
@@ -56,15 +55,9 @@ const createTaskCell = (inputDate, dayOfTheWeek = null) => {
   cellBody.appendChild(cellTaskBody);
 
   // Popup event listener for each cell
-  cellBody.addEventListener('click', () => {
-    cellBody.classList.add('calendar__cell_formating');
-    addEventPopup(dataDate);
-    const formDateArea = document.getElementsByClassName('task_adjunction_popup__task_date')[0];
-    // Input form style
-    const localizedDate = format(inputDate, 'd, MMMM, yyyy', { locale: ru }); // #1
-    // const localizedDate = format(inputDate, 'd MMMM yyyy', { locale: ru }) // #2
-
-    formDateArea.setAttribute('value', localizedDate);
+  cellBody.addEventListener('click', (event) => {
+    const cellDate = parseISO(cellBody.getAttribute('data-date'));
+    showEventPopup(cellDate);
   });
 
   return cellBody;

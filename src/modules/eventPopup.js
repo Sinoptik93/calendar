@@ -1,4 +1,4 @@
-import { parseISO, format } from 'date-fns';
+import { parseISO, format, formatISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import generateCalendar from './calendarGenerator.js';
 
@@ -50,8 +50,18 @@ const showEventPopup = (cellDate = Date.now()) => {
   popupForm.innerHTML = popupHTML;
   main.appendChild(popupForm);
 
-  if (localStorage.getItem(cellDate) !== null) {
-    const data = JSON.parse(localStorage.getItem(cellDate));
+  const markedCell = document.querySelector(`[data-date="${formatISO(cellDate, { representation: 'date' })}"]`);
+  markedCell.classList.add('calendar__cell_formating');
+  const formDateArea = document.getElementsByClassName('task_adjunction_popup__task_date')[0];
+  // Input form style
+  const localizedDate = format(cellDate, 'd, MMMM, yyyy', { locale: ru }); // #1
+  // const localizedDate = format(cellDate, 'd MMMM yyyy', { locale: ru }) // #2
+  formDateArea.setAttribute('value', localizedDate);
+
+  const unifiedCellDate = formatISO(cellDate, { representation: 'date' });
+
+  if (localStorage.getItem(unifiedCellDate) !== null) {
+    const data = JSON.parse(localStorage.getItem(unifiedCellDate));
     // Styled popup area elements!!!
     const styledTaskName = document.createElement('div');
     styledTaskName.setAttribute('class', 'task_adjunction_popup__styled_header');
@@ -84,14 +94,14 @@ const showEventPopup = (cellDate = Date.now()) => {
   acceptButton.addEventListener('click', (event) => {
     event.preventDefault();
     generateLocalState();
-    generateCalendar(parseISO(cellDate));
+    generateCalendar(cellDate);
   });
 
   const deleteButton = document.getElementsByClassName('task__adjunction_popup__delete_button')[0];
   deleteButton.addEventListener('click', (event) => {
     event.preventDefault();
-    localStorage.removeItem(cellDate);
-    generateCalendar(parseISO(cellDate));
+    localStorage.removeItem(unifiedCellDate);
+    generateCalendar(cellDate);
   });
 };
 
