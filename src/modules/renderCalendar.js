@@ -1,5 +1,5 @@
 import { getMonth, getYear, setMonth } from 'date-fns';
-import generateCalendar from './calendarGenerator.js'
+import generateCalendar from './calendarGenerator.js';
 
 // Navigation buttons elements
 const previousMonthButton = document.getElementsByClassName('navigation__prev_month_button')[0];
@@ -21,7 +21,7 @@ const monthsOfTheYear = [
   'Сентябрь',
   'Октябрь',
   'Ноябрь',
-  'Декабрь'
+  'Декабрь',
 ];
 
 const renderCalendar = (date = Date.now()) => {
@@ -30,27 +30,27 @@ const renderCalendar = (date = Date.now()) => {
   const targetMonth = getMonth(date);
   const targetYear = getYear(date);
 
-  navigationArea.textContent =`${monthsOfTheYear[targetMonth]} ${targetYear}`;
+  navigationArea.textContent = `${monthsOfTheYear[targetMonth]} ${targetYear}`;
 
   if (calendarArea !== undefined) {
     calendarArea.remove();
   }
   generateCalendar(date);
-}
+};
 
 // Navigation buttons event listener
 previousMonthButton.addEventListener('click', () => {
   targetDate = setMonth(targetDate, (getMonth(targetDate) - 1));
   renderCalendar(targetDate);
-})
+});
 
 nextMonthButton.addEventListener('click', () => {
   targetDate = setMonth(targetDate, (getMonth(targetDate) + 1));
   renderCalendar(targetDate);
-})
+});
 
 currentDayButton.addEventListener('click', () => {
   renderCalendar();
-})
+});
 
 export default renderCalendar;

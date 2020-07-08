@@ -1,5 +1,6 @@
+import { parseISO, format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import generateCalendar from './calendarGenerator.js';
-import { parseISO } from 'date-fns';
 
 const main = document.getElementsByClassName('calendar')[0];
 const popupForm = document.createElement('div');
@@ -42,19 +43,38 @@ const generateLocalState = () => {
   };
   // Input cell data to local storage
   localStorage.setItem(storageKey, JSON.stringify(cellData));
-}
+};
 
 const showEventPopup = (cellDate = Date.now()) => {
   popupForm.setAttribute('class', 'task_adjunction_popup__background');
   popupForm.innerHTML = popupHTML;
   main.appendChild(popupForm);
 
-  if(localStorage.getItem(cellDate) !== null) {
+  if (localStorage.getItem(cellDate) !== null) {
     const data = JSON.parse(localStorage.getItem(cellDate));
+    // Styled popup area elements!!!
+    const styledTaskName = document.createElement('div');
+    styledTaskName.setAttribute('class', 'task_adjunction_popup__styled_header');
+    styledTaskName.textContent = data.taskName;
+
+    const styledTaskDate = document.createElement('div');
+    styledTaskDate.setAttribute('class', 'task_adjunction_popup__styled_date');
+    styledTaskDate.textContent = format(parseISO(data.taskDate), 'd MMMM', { locale: ru });
+
+    const styledTaskMembers = document.createElement('div');
+    styledTaskMembers.setAttribute('class', 'task_adjunction_popup__styled_members');
+    styledTaskMembers.textContent = data.taskMembers;
+
+    const styledTaskDescription = document.createElement('div');
+    styledTaskDescription.setAttribute('class', 'task_adjunction_popup__styled_description');
+    styledTaskDescription.textContent = data.taskDescription;
+
+    // document.getElementsByName('task_name')[0].replaceWith(styledTaskName);
     document.getElementsByName('task_name')[0].value = data.taskName;
     document.getElementsByName('members')[0].value = data.taskMembers;
     document.getElementsByName('description')[0].value = data.taskDescription;
   }
+
   const closeButton = document.getElementsByClassName('task_adjunction_popup__close_button')[0];
   closeButton.addEventListener('click', () => {
     closeForm(popupForm);
@@ -76,4 +96,3 @@ const showEventPopup = (cellDate = Date.now()) => {
 };
 
 export default showEventPopup;
-

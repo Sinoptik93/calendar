@@ -52211,9 +52211,12 @@ function toDate(argument) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_renderCalendar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/renderCalendar.js */ "./src/modules/renderCalendar.js");
+/* harmony import */ var _modules_search_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/search.js */ "./src/modules/search.js");
+
  // Initial render
 
 Object(_modules_renderCalendar_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
+Object(_modules_search_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
 
 /***/ }),
 
@@ -52226,13 +52229,13 @@ Object(_modules_renderCalendar_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _eventPopup_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./eventPopup.js */ "./src/modules/eventPopup.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
-/* harmony import */ var date_fns_locale__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns/locale */ "./node_modules/date-fns/esm/locale/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+/* harmony import */ var date_fns_locale__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/locale */ "./node_modules/date-fns/esm/locale/index.js");
+/* harmony import */ var _eventPopup_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./eventPopup.js */ "./src/modules/eventPopup.js");
 
 
 
-var daysOfTheWeek = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]; // Create element with class
+var daysOfTheWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']; // Create element with class
 
 var createElemWithClass = function createElemWithClass(elementTagName, className) {
   var newElement = document.createElement(elementTagName);
@@ -52243,21 +52246,27 @@ var createElemWithClass = function createElemWithClass(elementTagName, className
 
 var createTaskCell = function createTaskCell(inputDate) {
   var dayOfTheWeek = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var cellDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["getDate"])(inputDate);
+  var cellDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getDate"])(inputDate);
   var currentDate = Date.now(); // Cell elements construct
 
   var cellBody = createElemWithClass('td', 'calendar__cell');
-  var dataDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["formatISO"])(inputDate, {
+  var dataDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["formatISO"])(inputDate, {
     representation: 'date'
   });
   cellBody.setAttribute('data-date', dataDate);
   var cellTaskBody = createElemWithClass('div', 'calendar__cell_task_body');
-  var cellHeader = createElemWithClass('div', 'calendar__cell_header');
-  dayOfTheWeek === null ? cellHeader.textContent = cellDate : cellHeader.textContent = "".concat(dayOfTheWeek, ", ").concat(cellDate);
+  var cellHeader = createElemWithClass('div', 'calendar__cell_header'); // dayOfTheWeek === null ? cellHeader.textContent = cellDate : cellHeader.textContent = `${dayOfTheWeek}, ${cellDate}`;
+
+  if (dayOfTheWeek === null) {
+    cellHeader.textContent = cellDate;
+  } else {
+    cellHeader.textContent = "".concat(dayOfTheWeek, ", ").concat(cellDate);
+  }
+
   var cellTaskHeader = createElemWithClass('div', 'calendar__task_header');
   var cellTaskIssue = createElemWithClass('div', 'calendar__task_issue'); // Current day mark style
 
-  if (Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["isSameDay"])(currentDate, inputDate)) {
+  if (Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["isSameDay"])(currentDate, inputDate)) {
     cellBody.classList.add('calendar__cell_active');
   }
 
@@ -52275,13 +52284,13 @@ var createTaskCell = function createTaskCell(inputDate) {
 
   cellBody.addEventListener('click', function () {
     cellBody.classList.add('calendar__cell_formating');
-    Object(_eventPopup_js__WEBPACK_IMPORTED_MODULE_0__["default"])(dataDate);
+    Object(_eventPopup_js__WEBPACK_IMPORTED_MODULE_2__["default"])(dataDate);
     var formDateArea = document.getElementsByClassName('task_adjunction_popup__task_date')[0]; // Input form style
 
-    var localizedDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["format"])(inputDate, 'd, MMMM, yyyy', {
-      locale: date_fns_locale__WEBPACK_IMPORTED_MODULE_2__["ru"]
+    var localizedDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["format"])(inputDate, 'd, MMMM, yyyy', {
+      locale: date_fns_locale__WEBPACK_IMPORTED_MODULE_1__["ru"]
     }); // #1
-    // const localizedDate = format(inputDate, 'd MMMM yyyy', {locale: ru}) // #2
+    // const localizedDate = format(inputDate, 'd MMMM yyyy', { locale: ru }) // #2
 
     formDateArea.setAttribute('value', localizedDate);
   });
@@ -52298,7 +52307,7 @@ var generateCalendar = function generateCalendar() {
   calendar.setAttribute('class', 'calendar__calendar_table');
   var calendarBody = document.createElement('tbody');
   calendarBody.setAttribute('class', 'calendar__calendar_body');
-  var calendarFirstDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["setDay"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["setDate"])(date, 1), 1, {
+  var calendarFirstDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["setDay"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["setDate"])(date, 1), 1, {
     weekStartsOn: 0
   });
   var currentDate = calendarFirstDate;
@@ -52312,13 +52321,13 @@ var generateCalendar = function generateCalendar() {
       for (var currentDayOfWeek = 0; currentDayOfWeek < 7; currentDayOfWeek += 1) {
         currentTaskCell = createTaskCell(currentDate);
         currentRow.appendChild(currentTaskCell);
-        currentDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["setDate"])(currentDate, Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["getDate"])(currentDate) + 1);
+        currentDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["setDate"])(currentDate, Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getDate"])(currentDate) + 1);
       }
     } else {
       for (var _currentDayOfWeek = 0; _currentDayOfWeek < 7; _currentDayOfWeek += 1) {
         currentTaskCell = createTaskCell(currentDate, daysOfTheWeek[_currentDayOfWeek]);
         currentRow.appendChild(currentTaskCell);
-        currentDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["setDate"])(currentDate, Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["getDate"])(currentDate) + 1);
+        currentDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["setDate"])(currentDate, Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getDate"])(currentDate) + 1);
       }
     }
 
@@ -52342,8 +52351,10 @@ var generateCalendar = function generateCalendar() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _calendarGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./calendarGenerator.js */ "./src/modules/calendarGenerator.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+/* harmony import */ var date_fns_locale__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/locale */ "./node_modules/date-fns/esm/locale/index.js");
+/* harmony import */ var _calendarGenerator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendarGenerator.js */ "./src/modules/calendarGenerator.js");
+
 
 
 var main = document.getElementsByClassName('calendar')[0];
@@ -52380,7 +52391,23 @@ var showEventPopup = function showEventPopup() {
   main.appendChild(popupForm);
 
   if (localStorage.getItem(cellDate) !== null) {
-    var data = JSON.parse(localStorage.getItem(cellDate));
+    var data = JSON.parse(localStorage.getItem(cellDate)); // Styled popup area elements!!!
+
+    var styledTaskName = document.createElement('div');
+    styledTaskName.setAttribute('class', 'task_adjunction_popup__styled_header');
+    styledTaskName.textContent = data.taskName;
+    var styledTaskDate = document.createElement('div');
+    styledTaskDate.setAttribute('class', 'task_adjunction_popup__styled_date');
+    styledTaskDate.textContent = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["format"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(data.taskDate), 'd MMMM', {
+      locale: date_fns_locale__WEBPACK_IMPORTED_MODULE_1__["ru"]
+    });
+    var styledTaskMembers = document.createElement('div');
+    styledTaskMembers.setAttribute('class', 'task_adjunction_popup__styled_members');
+    styledTaskMembers.textContent = data.taskMembers;
+    var styledTaskDescription = document.createElement('div');
+    styledTaskDescription.setAttribute('class', 'task_adjunction_popup__styled_description');
+    styledTaskDescription.textContent = data.taskDescription; // document.getElementsByName('task_name')[0].replaceWith(styledTaskName);
+
     document.getElementsByName('task_name')[0].value = data.taskName;
     document.getElementsByName('members')[0].value = data.taskMembers;
     document.getElementsByName('description')[0].value = data.taskDescription;
@@ -52394,13 +52421,13 @@ var showEventPopup = function showEventPopup() {
   acceptButton.addEventListener('click', function (event) {
     event.preventDefault();
     generateLocalState();
-    Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["parseISO"])(cellDate));
+    Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(cellDate));
   });
   var deleteButton = document.getElementsByClassName('task__adjunction_popup__delete_button')[0];
   deleteButton.addEventListener('click', function (event) {
     event.preventDefault();
     localStorage.removeItem(cellDate);
-    Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["parseISO"])(cellDate));
+    Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_2__["default"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(cellDate));
   });
 };
 
@@ -52457,6 +52484,85 @@ currentDayButton.addEventListener('click', function () {
   renderCalendar();
 });
 /* harmony default export */ __webpack_exports__["default"] = (renderCalendar);
+
+/***/ }),
+
+/***/ "./src/modules/search.js":
+/*!*******************************!*\
+  !*** ./src/modules/search.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var inputSearchForm = document.getElementsByClassName('header__search_area')[0];
+var resultsMenu = document.getElementsByClassName('search_results')[0];
+var closeButton = document.getElementsByClassName('header__search_form_close_button')[0];
+inputSearchForm.addEventListener('focus', function () {
+  resultsMenu.style.display = 'flex';
+  closeButton.style.display = 'block';
+}); // inputSearchForm.addEventListener('blur', () => {
+//   resultsMenu.style.display = 'none';
+//   closeButton.style.display = 'none';
+// })
+
+closeButton.addEventListener('click', function () {
+  inputSearchForm.value = '';
+  resultsMenu.style.display = 'none';
+  closeButton.style.display = 'none';
+});
+
+var parseLocalStorage = function parseLocalStorage(storage) {
+  var result = [];
+  var storageItems = Object.values(storage);
+
+  for (var _i = 0, _storageItems = storageItems; _i < _storageItems.length; _i++) {
+    var value = _storageItems[_i];
+    var searchingString = [];
+    var pasedItem = JSON.parse(value);
+
+    for (var _ref in pasedItem) {
+      var _ref2 = _slicedToArray(_ref, 2);
+
+      var parsedKey = _ref2[0];
+      var parsedValue = _ref2[1];
+      searchingString.push({
+        parsedKey: parsedValue
+      });
+    }
+
+    result.push("".concat({
+      searchingString: searchingString,
+      data: pasedItem
+    }));
+  }
+
+  return result;
+};
+
+var dynamicSearch = function dynamicSearch() {
+  var searchArea = document.getElementsByClassName('header__search_area')[0];
+  var parsedCurrentStorage = parseLocalStorage(localStorage);
+  searchArea.addEventListener('input', function (event) {
+    var inputValue = event.target.value;
+    parsedCurrentStorage.forEach(function (currentEvent) {});
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (dynamicSearch);
 
 /***/ })
 
