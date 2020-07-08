@@ -16,6 +16,8 @@ $task_cell_color: #c1e4ff;
 $hover_cell_color: #f3f3f3;
 $formating_cell_color: #a6d8ff;
 
+$scroll_bar_color: #868686;
+
 // Table config:
 $row_height: 120px;
 
@@ -91,15 +93,30 @@ $row_height: 120px;
   }
   &__search_form {
     display: flex;
+    position: relative;
+    right: 90px;
     justify-content: center;
+      &_close_button {
+        display: none;
+        position: absolute;;
+        height: 12px;
+        top: 5px;
+        left: 95px;
+        font-weight: 600;
+        color: #7c7c7c;
+        cursor: pointer;
+      }
   }
   &__search_icon {
     display: block;
+    position: relative;
+    right: 110px;
     margin: auto 0;
     margin-right: 5px;
     height: 20px;
   }
   &__search_area {
+    position: absolute;
     width: 200px;
     height: 28px;
     @include input_form_style();
@@ -177,6 +194,7 @@ $row_height: 120px;
     }
     &_active {
       font-weight: 500;
+      color: #363636;
       background-color: $current_day_cell_color;
     }
     &_formating {
@@ -210,13 +228,14 @@ $row_height: 120px;
 
 .task_adjunction_popup {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+  font-family: $table_font;
   &__background {
     position: fixed;
     z-index: 0;
@@ -224,7 +243,7 @@ $row_height: 120px;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #000000b3;
   }
   &__close_button {
     position: absolute;
@@ -264,23 +283,104 @@ $row_height: 120px;
     height: 120px;
     margin-top: 20px;
     resize: none;
-
     @include input_form_style();
   }
   &__buttons_area {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     & button {
       @include form_button_style();
+      margin-right: 15px;
       padding: 4px;
       &:hover {
         background-color: #006fca;
         color: #ffffff;
       }
+      
     }
     &>.task__adjunction_popup__delete_button:hover {
       background-color: #cc3c3c;
       color: #ffffff;
+    }
+  }
+
+.search_results {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  width: 200px;
+  height: 400px;
+  top: 45px;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px 0px #000000bf;
+  overflow: scroll;
+  overflow-x: hidden;
+  // Decorate element (problem)
+  // &:after {
+  //   content: ' ';
+  //   position: absolute;
+  //   top: -10px;
+  //   left: 8px;
+  //   transform: rotate(45deg);
+  //   width: 36px;
+  //   height: 36px;
+  //   background-color: #fff;
+  //   border: none;
+  //   z-index: 3;
+  // }
+  // &:before {
+  //   content: ' ';
+  //   position: absolute;
+  //   top: -10px;
+  //   left: 8px;
+  //   transform: rotate(45deg);
+  //   width: 36px;
+  //   height: 36px;
+  //   box-shadow: 0px 0px 5px 0px #000000bf;
+  //   z-index: 1;
+  // }
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+      color: #fff;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: $scroll_bar_color;
+    padding-right: 10px;
+  }
+
+  &__search_results_body {
+    margin: 10px 20px 10px 5px;
+    width: 90%;
+    height: 600px;
+  }
+
+  &__task_header {
+    font-family: $header_font;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  &__task_date {
+    font-family: $header_font;
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.7;
+  }
+
+  &__task_body {
+    padding: 10px 5px;
+    height: 40px;
+    border-bottom: 1px solid #dadada;
+    &:hover {
+      background: #006fca;
+      background: linear-gradient(-90deg, #006fca 0%, #3a9ef0 100%);
+      color: #fff;
+      cursor: pointer;
+      transition: 0.2s;
     }
   }
 }

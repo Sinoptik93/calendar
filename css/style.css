@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap");
 .container {
   max-width: 1000px;
@@ -61,19 +62,35 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
+  right: 90px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
 }
 
+.header__search_form_close_button {
+  display: none;
+  position: absolute;
+  height: 12px;
+  top: 5px;
+  left: 95px;
+  font-weight: 600;
+  color: #7c7c7c;
+  cursor: pointer;
+}
+
 .header__search_icon {
   display: block;
+  position: relative;
+  right: 110px;
   margin: auto 0;
   margin-right: 5px;
   height: 20px;
 }
 
 .header__search_area {
+  position: absolute;
   width: 200px;
   height: 28px;
   border: 1px solid #a5a5a5;
@@ -212,6 +229,7 @@
 
 .calendar__cell_active {
   font-weight: 500;
+  color: #363636;
   background-color: #e9e9e9;
 }
 
@@ -251,18 +269,20 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   z-index: 1;
+  font-family: "Roboto", sans-serif;
 }
 
 .task_adjunction_popup__background {
@@ -272,7 +292,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #000000b3;
 }
 
 .task_adjunction_popup__close_button {
@@ -389,9 +409,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
 }
 
 .task_adjunction_popup__buttons_area button {
@@ -402,6 +422,7 @@
   font-weight: 400;
   font-size: 13px;
   color: #131313;
+  margin-right: 15px;
   padding: 4px;
 }
 
@@ -420,4 +441,104 @@
 .task_adjunction_popup__buttons_area > .task__adjunction_popup__delete_button:hover {
   background-color: #cc3c3c;
   color: #ffffff;
+}
+
+.task_adjunction_popup__styled_header {
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.task_adjunction_popup__styled_date {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.task_adjunction_popup__styled_members {
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.task_adjunction_popup__styled_members:before {
+  content: 'Участники:';
+  position: absolute;
+  top: 140px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #505050;
+}
+
+.task_adjunction_popup__styled_description {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.search_results {
+  position: absolute;
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 200px;
+  height: 400px;
+  top: 45px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 5px 0px #000000bf;
+          box-shadow: 0px 0px 5px 0px #000000bf;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.search_results::-webkit-scrollbar {
+  width: 8px;
+}
+
+.search_results::-webkit-scrollbar-track {
+  color: #fff;
+}
+
+.search_results::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #868686;
+  padding-right: 10px;
+}
+
+.search_results__search_results_body {
+  margin: 10px 20px 10px 5px;
+  width: 90%;
+  height: 600px;
+}
+
+.search_results__task_header {
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.search_results__task_date {
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.search_results__task_body {
+  padding: 10px 5px;
+  height: 40px;
+  border-bottom: 1px solid #dadada;
+}
+
+.search_results__task_body:hover {
+  background: #006fca;
+  background: -webkit-gradient(linear, right top, left top, from(#006fca), to(#3a9ef0));
+  background: linear-gradient(-90deg, #006fca 0%, #3a9ef0 100%);
+  color: #fff;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
