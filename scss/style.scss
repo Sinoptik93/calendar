@@ -272,10 +272,15 @@ $row_height: 120px;
     justify-content: space-between;
     & button {
       @include form_button_style();
+      padding: 4px;
       &:hover {
         background-color: #006fca;
         color: #ffffff;
       }
+    }
+    &>.task__adjunction_popup__delete_button:hover {
+      background-color: #cc3c3c;
+      color: #ffffff;
     }
   }
 }

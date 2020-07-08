@@ -48,7 +48,7 @@ const createTaskCell = (inputDate, dayOfTheWeek = null) => {
   cellTaskBody.appendChild(cellTaskHeader);
   cellTaskBody.appendChild(cellTaskIssue);
   cellBody.appendChild(cellHeader);
-  cellBody.appendChild(cellTaskBody)
+  cellBody.appendChild(cellTaskBody);
   
   // Popup event listener for each cell
   cellBody.addEventListener('click', () => {

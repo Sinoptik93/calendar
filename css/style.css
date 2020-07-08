@@ -402,6 +402,7 @@
   font-weight: 400;
   font-size: 13px;
   color: #131313;
+  padding: 4px;
 }
 
 .task_adjunction_popup__buttons_area button:hover {
@@ -413,5 +414,10 @@
 
 .task_adjunction_popup__buttons_area button:hover {
   background-color: #006fca;
+  color: #ffffff;
+}
+
+.task_adjunction_popup__buttons_area > .task__adjunction_popup__delete_button:hover {
+  background-color: #cc3c3c;
   color: #ffffff;
 }

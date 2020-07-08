@@ -1,4 +1,4 @@
-import generateCalendar from './calendarGenerator.js'
+import generateCalendar from './calendarGenerator.js';
 import { parseISO } from 'date-fns';
 
 const main = document.getElementsByClassName('calendar')[0];
@@ -23,7 +23,7 @@ const popupHTML = `
 
 const closeForm = (form) => {
   const formattingCell = document.getElementsByClassName('calendar__cell_formating')[0];
-  formattingCell.classList.remove('calendar__cell_formating')
+  formattingCell.classList.remove('calendar__cell_formating');
   form.remove();
 };
 
@@ -38,14 +38,14 @@ const generateLocalState = () => {
     taskName,
     taskDate,
     taskMembers,
-    taskDescription
-  }
+    taskDescription,
+  };
   // Input cell data to local storage
   localStorage.setItem(storageKey, JSON.stringify(cellData));
 }
 
 const showEventPopup = (cellDate = Date.now()) => {
-  popupForm.setAttribute('class', 'task_adjunction_popup__background')
+  popupForm.setAttribute('class', 'task_adjunction_popup__background');
   popupForm.innerHTML = popupHTML;
   main.appendChild(popupForm);
 
@@ -57,7 +57,7 @@ const showEventPopup = (cellDate = Date.now()) => {
   }
   const closeButton = document.getElementsByClassName('task_adjunction_popup__close_button')[0];
   closeButton.addEventListener('click', () => {
-    closeForm(popupForm)
+    closeForm(popupForm);
   });
 
   const acceptButton = document.getElementsByClassName('task__adjunction_popup__accept_button')[0];
@@ -65,16 +65,15 @@ const showEventPopup = (cellDate = Date.now()) => {
     event.preventDefault();
     generateLocalState();
     generateCalendar(parseISO(cellDate));
-  })
+  });
 
   const deleteButton = document.getElementsByClassName('task__adjunction_popup__delete_button')[0];
   deleteButton.addEventListener('click', (event) => {
     event.preventDefault();
     localStorage.removeItem(cellDate);
     generateCalendar(parseISO(cellDate));
-  })
+  });
 };
-
 
 export default showEventPopup;
 
