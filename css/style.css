@@ -142,7 +142,7 @@
 .navigation__change_month_button {
   width: 20px;
   height: 20px;
-  color: #474747;
+  color: #131313;
 }
 
 .navigation__current_month {
@@ -159,7 +159,7 @@
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 13px;
-  color: #474747;
+  color: #131313;
 }
 
 .navigation__current_day_button:hover {
@@ -401,8 +401,7 @@
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 13px;
-  color: #474747;
-  color: #000000;
+  color: #131313;
 }
 
 .task_adjunction_popup__buttons_area button:hover {

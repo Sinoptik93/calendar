@@ -8,7 +8,7 @@ $header_backgroung_color: #f4f4f4;
 $header_button_color: #006fca;
 $header_icon_color: #b6b6b6;
 
-$navigation_button_text_color: #474747;
+$navigation_button_text_color: #131313;
 
 $table_text_color: #505050;
 $current_day_cell_color: #e9e9e9;
@@ -272,7 +272,6 @@ $row_height: 120px;
     justify-content: space-between;
     & button {
       @include form_button_style();
-      color: #000000;
       &:hover {
         background-color: #006fca;
         color: #ffffff;

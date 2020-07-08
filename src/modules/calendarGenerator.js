@@ -1,5 +1,5 @@
 import addEventPopup from './eventPopup.js';
-import { setDay, setDate, getDate, isSameDay, format } from 'date-fns';
+import { setDay, setDate, getDate, isSameDay, format, formatISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
 const daysOfTheWeek = [
@@ -25,7 +25,8 @@ const createTaskCell = (inputDate, dayOfTheWeek = null) => {
   const currentDate = Date.now();
   // Cell elements construct
   const cellBody = createElemWithClass('td', 'calendar__cell');
-  cellBody.setAttribute('data-date', inputDate);
+  const dataDate = formatISO(inputDate, { representation: 'date' });
+  cellBody.setAttribute('data-date', dataDate);
   const cellTaskBody = createElemWithClass('div', 'calendar__cell_task_body');
   const cellHeader = createElemWithClass('div', 'calendar__cell_header');
   dayOfTheWeek === null ? cellHeader.textContent = cellDate : cellHeader.textContent = `${dayOfTheWeek}, ${cellDate}`; 
@@ -37,6 +38,13 @@ const createTaskCell = (inputDate, dayOfTheWeek = null) => {
     cellBody.classList.add('calendar__cell_active');
   }
 
+  if(localStorage.getItem(dataDate) !== null) {
+    const data = JSON.parse(localStorage.getItem(dataDate));
+    cellBody.classList.add('calendar__cell_marked');
+    cellTaskHeader.textContent = data.taskName;
+    cellTaskIssue.textContent = data.taskMembers;
+  }
+
   cellTaskBody.appendChild(cellTaskHeader);
   cellTaskBody.appendChild(cellTaskIssue);
   cellBody.appendChild(cellHeader);
@@ -45,7 +53,7 @@ const createTaskCell = (inputDate, dayOfTheWeek = null) => {
   // Popup event listener for each cell
   cellBody.addEventListener('click', () => {
     cellBody.classList.add('calendar__cell_formating');
-    addEventPopup();
+    addEventPopup(dataDate);
     const formDateArea = document.getElementsByClassName('task_adjunction_popup__task_date')[0];
     // Input form style
     const localizedDate = format(inputDate, 'd, MMMM, yyyy', {locale: ru}) // #1
@@ -60,6 +68,7 @@ const createTaskCell = (inputDate, dayOfTheWeek = null) => {
 const generateCalendar = (date = Date.now(), elementId = 'calendar') => {
   const tableRows = 5;
   const targetContainer = document.getElementById(elementId);
+  targetContainer.innerHTML = '';
   const calendar = document.createElement('table');
   calendar.setAttribute('class', 'calendar__calendar_table');
   const calendarBody = document.createElement('tbody');

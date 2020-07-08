@@ -52247,7 +52247,10 @@ var createTaskCell = function createTaskCell(inputDate) {
   var currentDate = Date.now(); // Cell elements construct
 
   var cellBody = createElemWithClass('td', 'calendar__cell');
-  cellBody.setAttribute('data-date', inputDate);
+  var dataDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["formatISO"])(inputDate, {
+    representation: 'date'
+  });
+  cellBody.setAttribute('data-date', dataDate);
   var cellTaskBody = createElemWithClass('div', 'calendar__cell_task_body');
   var cellHeader = createElemWithClass('div', 'calendar__cell_header');
   dayOfTheWeek === null ? cellHeader.textContent = cellDate : cellHeader.textContent = "".concat(dayOfTheWeek, ", ").concat(cellDate);
@@ -52258,6 +52261,13 @@ var createTaskCell = function createTaskCell(inputDate) {
     cellBody.classList.add('calendar__cell_active');
   }
 
+  if (localStorage.getItem(dataDate) !== null) {
+    var data = JSON.parse(localStorage.getItem(dataDate));
+    cellBody.classList.add('calendar__cell_marked');
+    cellTaskHeader.textContent = data.taskName;
+    cellTaskIssue.textContent = data.taskMembers;
+  }
+
   cellTaskBody.appendChild(cellTaskHeader);
   cellTaskBody.appendChild(cellTaskIssue);
   cellBody.appendChild(cellHeader);
@@ -52265,7 +52275,7 @@ var createTaskCell = function createTaskCell(inputDate) {
 
   cellBody.addEventListener('click', function () {
     cellBody.classList.add('calendar__cell_formating');
-    Object(_eventPopup_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
+    Object(_eventPopup_js__WEBPACK_IMPORTED_MODULE_0__["default"])(dataDate);
     var formDateArea = document.getElementsByClassName('task_adjunction_popup__task_date')[0]; // Input form style
 
     var localizedDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["format"])(inputDate, 'd, MMMM, yyyy', {
@@ -52283,6 +52293,7 @@ var generateCalendar = function generateCalendar() {
   var elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'calendar';
   var tableRows = 5;
   var targetContainer = document.getElementById(elementId);
+  targetContainer.innerHTML = '';
   var calendar = document.createElement('table');
   calendar.setAttribute('class', 'calendar__calendar_table');
   var calendarBody = document.createElement('tbody');
@@ -52331,25 +52342,66 @@ var generateCalendar = function generateCalendar() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _calendarGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./calendarGenerator.js */ "./src/modules/calendarGenerator.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+
+
 var main = document.getElementsByClassName('calendar')[0];
 var popupForm = document.createElement('div');
+var popupHTML = "\n  <div class=\"task_adjunction_popup\">\n    <div class=\"task_adjunction_popup__body\">\n      <div class=\"task_adjunction_popup__close_button\">\u2715</div>\n      <form action=\"\" class=\"task_adjunction_popup__form_body\">\n        <input type=\"text\" name=\"task_name\" class=\"task_adjunction_popup__task_name\" placeholder=\"\u0421\u043E\u0431\u044B\u0442\u0438\u0435\" required autofocus >\n        <input type=\"text\" name=\"date\" class=\"task_adjunction_popup__task_date\" placeholder=\"\u0414\u0435\u043D\u044C, \u043C\u0435\u0441\u044F\u0446, \u0433\u043E\u0434\" required>\n        <input type=\"text\" name=\"members\" class=\"task_adjunction_popup__task_members\" placeholder=\"\u0418\u043C\u0435\u043D\u0430 \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u043E\u0432\">\n        <textarea rows=\"6\" name=\"description\" class=\"task_adjunction_popup__task_description\" placeholder=\"\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435\"></textarea>\n        <div class=\"task_adjunction_popup__buttons_area\">\n          <button class=\"task__adjunction_popup__accept_button\">\u0413\u043E\u0442\u043E\u0432\u043E</button>\n          <button class=\"task__adjunction_popup__delete_button\">\u0423\u0434\u0430\u043B\u0438\u0442\u044C</button>\n        </div>\n      </form>\n    </div>\n  </div>\n";
+
+var closeForm = function closeForm(form) {
+  var formattingCell = document.getElementsByClassName('calendar__cell_formating')[0];
+  formattingCell.classList.remove('calendar__cell_formating');
+  form.remove();
+};
+
+var generateLocalState = function generateLocalState() {
+  var taskName = document.getElementsByName('task_name')[0].value;
+  var taskDate = document.getElementsByClassName('calendar__cell_formating')[0].getAttribute('data-date');
+  var storageKey = taskDate;
+  var taskMembers = document.getElementsByName('members')[0].value;
+  var taskDescription = document.getElementsByName('description')[0].value; // Generate local data
+
+  var cellData = {
+    taskName: taskName,
+    taskDate: taskDate,
+    taskMembers: taskMembers,
+    taskDescription: taskDescription
+  }; // Input cell data to local storage
+
+  localStorage.setItem(storageKey, JSON.stringify(cellData));
+};
 
 var showEventPopup = function showEventPopup() {
-  var popupHTML = "\n  <div class=\"task_adjunction_popup\">\n    <div class=\"task_adjunction_popup__body\">\n      <div class=\"task_adjunction_popup__close_button\">\u2715</div>\n      <form action=\"\" class=\"task_adjunction_popup__form_body\">\n        <input type=\"text\" name=\"task_name\" class=\"task_adjunction_popup__task_name\" placeholder=\"\u0421\u043E\u0431\u044B\u0442\u0438\u0435\">\n        <input type=\"text\" name=\"date\" class=\"task_adjunction_popup__task_date\" placeholder=\"\u0414\u0435\u043D\u044C, \u043C\u0435\u0441\u044F\u0446, \u0433\u043E\u0434\">\n        <input type=\"text\" name=\"members\" class=\"task_adjunction_popup__task_members\" placeholder=\"\u0418\u043C\u0435\u043D\u0430 \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u043E\u0432\">\n        <textarea rows=\"6\" name=\"description\" class=\"task_adjunction_popup__task_description\" placeholder=\"\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435\"></textarea>\n        <div class=\"task_adjunction_popup__buttons_area\">\n          <button class=\"task__adjunction_popup__accept_button\">\u0413\u043E\u0442\u043E\u0432\u043E</button>\n          <button class=\"task__adjunction_popup__delete_button\">\u0423\u0434\u0430\u043B\u0438\u0442\u044C</button>\n        </div>\n      </form>\n    </div>\n  </div>\n  ";
+  var cellDate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Date.now();
   popupForm.setAttribute('class', 'task_adjunction_popup__background');
   popupForm.innerHTML = popupHTML;
   main.appendChild(popupForm);
+
+  if (localStorage.getItem(cellDate) !== null) {
+    var data = JSON.parse(localStorage.getItem(cellDate));
+    document.getElementsByName('task_name')[0].value = data.taskName;
+    document.getElementsByName('members')[0].value = data.taskMembers;
+    document.getElementsByName('description')[0].value = data.taskDescription;
+  }
+
   var closeButton = document.getElementsByClassName('task_adjunction_popup__close_button')[0];
   closeButton.addEventListener('click', function () {
-    var formattingCell = document.getElementsByClassName('calendar__cell_formating')[0];
-    formattingCell.classList.remove('calendar__cell_formating');
-    popupForm.remove();
-  }); // const background = document.getElementsByClassName('task_adjunction_popup__background')[0];
-  // background.addEventListener('click', ()=> {
-  //   const formattingCell = document.getElementsByClassName('calendar__cell_formating')[0];
-  //   formattingCell.classList.remove('calendar__cell_formating')
-  //   popupForm.remove();
-  // })
+    closeForm(popupForm);
+  });
+  var acceptButton = document.getElementsByClassName('task__adjunction_popup__accept_button')[0];
+  acceptButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    generateLocalState();
+    Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["parseISO"])(cellDate));
+  });
+  var deleteButton = document.getElementsByClassName('task__adjunction_popup__delete_button')[0];
+  deleteButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    localStorage.removeItem(cellDate);
+    Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_1__["parseISO"])(cellDate));
+  });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (showEventPopup);
