@@ -2,7 +2,7 @@
 ## Calendar with tasks adjunction, searching & quick task adder.
 
 * Github Pages: [sinoptik93.github.io/calendar/](https://sinoptik93.github.io/calendar/)
-* Task problems: [link]
+* Task problems: [link](https://docs.google.com/document/d/1qXF9ahKH-RJV1P2JfDKwf-qnjHAxkAY8IxQUH_Ou7vI/edit)
 
 1. Add event and save in `localStorage`:
 
