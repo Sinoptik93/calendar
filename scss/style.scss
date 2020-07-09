@@ -84,10 +84,15 @@ $row_height: 120px;
       font-size: 12px;
       font-weight: 500;
       text-shadow: 0px 1px 3px #363636;
-      &:hover {
+      &:hover:enabled {
         cursor: pointer;
         opacity: 0.8;
         transition-duration: 0.3s;
+      }
+      &:disabled {
+        background-color: #868686;
+        cursor: default;
+        
       }
     }
   }
@@ -412,6 +417,42 @@ $row_height: 120px;
       color: #fff;
       cursor: pointer;
       transition: 0.2s;
+    }
+  }
+}
+
+.quick_add {
+  position: absolute;  
+  display: none;
+  top: 100px;
+  &__body {
+    width: 300px;
+    height: 110px;
+    box-shadow: 0px 0px 5px 0px #000000bf;
+    background-color: #ffffff;
+  }
+  &__content {
+    padding: 25px 25px 20px 20px;
+  }
+  &__input_form {
+    display: block;
+    width: 100%;
+    @include input_form_style();
+  }
+  &__create_button {
+    margin-top: 15px;
+    display: block;
+    cursor: pointer;
+  }
+  &__close_button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: #555555;
+    &:hover {
+      color: #000000;
+      transition: 0.3s;
     }
   }
 }
