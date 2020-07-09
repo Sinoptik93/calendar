@@ -52212,8 +52212,15 @@ function toDate(argument) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_renderCalendar_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/renderCalendar.js */ "./src/modules/renderCalendar.js");
 /* harmony import */ var _modules_search_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/search.js */ "./src/modules/search.js");
+/* harmony import */ var _modules_quickAdd_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/quickAdd.js */ "./src/modules/quickAdd.js");
 
- // Initial render
+
+
+var updateButton = document.querySelector('.header__update_button');
+updateButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  Object(_modules_renderCalendar_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
+}); // Initial render
 
 Object(_modules_renderCalendar_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
 
@@ -52279,9 +52286,9 @@ var createTaskCell = function createTaskCell(inputDate) {
   cellBody.appendChild(cellHeader);
   cellBody.appendChild(cellTaskBody); // Popup event listener for each cell
 
-  cellBody.addEventListener('click', function (event) {
-    var cellDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(cellBody.getAttribute('data-date'));
-    Object(_eventPopup_js__WEBPACK_IMPORTED_MODULE_1__["default"])(cellDate);
+  cellBody.addEventListener('click', function () {
+    var parsedCellDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(cellBody.getAttribute('data-date'));
+    Object(_eventPopup_js__WEBPACK_IMPORTED_MODULE_1__["default"])(parsedCellDate);
   });
   return cellBody;
 };
@@ -52346,12 +52353,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var main = document.getElementsByClassName('calendar')[0];
+var main = document.querySelector('.calendar');
 var popupForm = document.createElement('div');
 var popupHTML = "\n  <div class=\"task_adjunction_popup\">\n    <div class=\"task_adjunction_popup__body\">\n      <div class=\"task_adjunction_popup__close_button\">\u2715</div>\n      <form action=\"\" class=\"task_adjunction_popup__form_body\">\n        <input type=\"text\" name=\"task_name\" class=\"task_adjunction_popup__task_name\" placeholder=\"\u0421\u043E\u0431\u044B\u0442\u0438\u0435\" required autofocus >\n        <input type=\"text\" name=\"date\" class=\"task_adjunction_popup__task_date\" placeholder=\"\u0414\u0435\u043D\u044C, \u043C\u0435\u0441\u044F\u0446, \u0433\u043E\u0434\" required>\n        <input type=\"text\" name=\"members\" class=\"task_adjunction_popup__task_members\" placeholder=\"\u0418\u043C\u0435\u043D\u0430 \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A\u043E\u0432\">\n        <textarea rows=\"6\" name=\"description\" class=\"task_adjunction_popup__task_description\" placeholder=\"\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435\"></textarea>\n        <div class=\"task_adjunction_popup__buttons_area\">\n          <button class=\"task__adjunction_popup__accept_button\">\u0413\u043E\u0442\u043E\u0432\u043E</button>\n          <button class=\"task__adjunction_popup__delete_button\">\u0423\u0434\u0430\u043B\u0438\u0442\u044C</button>\n        </div>\n      </form>\n    </div>\n  </div>\n";
 
 var closeForm = function closeForm(form) {
-  var formattingCell = document.getElementsByClassName('calendar__cell_formating')[0];
+  var formattingCell = document.querySelector('.calendar__cell_formating');
   formattingCell.classList.remove('calendar__cell_formating');
   form.remove();
 };
@@ -52382,7 +52389,7 @@ var showEventPopup = function showEventPopup() {
     representation: 'date'
   }), "\"]"));
   markedCell.classList.add('calendar__cell_formating');
-  var formDateArea = document.getElementsByClassName('task_adjunction_popup__task_date')[0]; // Input form style
+  var formDateArea = document.querySelector('.task_adjunction_popup__task_date'); // Input form style
 
   var localizedDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["format"])(cellDate, 'd, MMMM, yyyy', {
     locale: date_fns_locale__WEBPACK_IMPORTED_MODULE_1__["ru"]
@@ -52410,24 +52417,24 @@ var showEventPopup = function showEventPopup() {
     styledTaskMembers.textContent = data.taskMembers;
     var styledTaskDescription = document.createElement('div');
     styledTaskDescription.setAttribute('class', 'task_adjunction_popup__styled_description');
-    styledTaskDescription.textContent = data.taskDescription; // document.getElementsByName('task_name')[0].replaceWith(styledTaskName);
+    styledTaskDescription.textContent = data.taskDescription; // document.querySelector('.task_name').replaceWith(styledTaskName);
 
     document.getElementsByName('task_name')[0].value = data.taskName;
     document.getElementsByName('members')[0].value = data.taskMembers;
     document.getElementsByName('description')[0].value = data.taskDescription;
   }
 
-  var closeButton = document.getElementsByClassName('task_adjunction_popup__close_button')[0];
+  var closeButton = document.querySelector('.task_adjunction_popup__close_button');
   closeButton.addEventListener('click', function () {
     closeForm(popupForm);
   });
-  var acceptButton = document.getElementsByClassName('task__adjunction_popup__accept_button')[0];
+  var acceptButton = document.querySelector('.task__adjunction_popup__accept_button');
   acceptButton.addEventListener('click', function (event) {
     event.preventDefault();
     generateLocalState();
     Object(_calendarGenerator_js__WEBPACK_IMPORTED_MODULE_2__["default"])(cellDate);
   });
-  var deleteButton = document.getElementsByClassName('task__adjunction_popup__delete_button')[0];
+  var deleteButton = document.querySelector('.task__adjunction_popup__delete_button');
   deleteButton.addEventListener('click', function (event) {
     event.preventDefault();
     localStorage.removeItem(unifiedCellDate);
@@ -52436,6 +52443,90 @@ var showEventPopup = function showEventPopup() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (showEventPopup);
+
+/***/ }),
+
+/***/ "./src/modules/quickAdd.js":
+/*!*********************************!*\
+  !*** ./src/modules/quickAdd.js ***!
+  \*********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+/* harmony import */ var date_fns_locale__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns/locale */ "./node_modules/date-fns/esm/locale/index.js");
+/* harmony import */ var _renderCalendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./renderCalendar.js */ "./src/modules/renderCalendar.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+var addEventButton = document.querySelector('.header__add_event__button');
+var quickAddForm = document.querySelector('.quick_add');
+var inputArea = document.querySelector('.quick_add__input_form');
+var createEventButton = document.querySelector('.quick_add__create_button');
+var quickFormCloseButton = document.querySelector('.quick_add__close_button');
+
+var parseString = function parseString(string) {
+  console.log(string);
+  var elements = string.split(', ');
+  console.log(elements);
+
+  if (elements.length < 2) {
+    alert('Заполните поле форматом: "дата, название события, участники"');
+    return;
+  }
+
+  var _elements = _slicedToArray(elements, 3),
+      taskDate = _elements[0],
+      taskName = _elements[1],
+      taskMembers = _elements[2];
+
+  var parsedDate = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parse"])(taskDate, 'dd MMMM', new Date(), {
+    locale: date_fns_locale__WEBPACK_IMPORTED_MODULE_1__["ru"]
+  });
+  var storageKey = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["formatISO"])(parsedDate, {
+    representation: 'date'
+  });
+  var newStorageItem = {
+    taskName: taskName,
+    taskDate: storageKey,
+    taskMembers: taskMembers,
+    taskDescription: ''
+  };
+  localStorage.setItem(storageKey, JSON.stringify(newStorageItem));
+};
+
+addEventButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  addEventButton.setAttribute('disabled', true);
+  quickAddForm.style.display = 'block';
+});
+createEventButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  parseString(inputArea.value);
+  addEventButton.removeAttribute('disabled');
+  quickAddForm.style.display = 'none';
+  inputArea.value = '';
+  Object(_renderCalendar_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
+});
+quickFormCloseButton.addEventListener('click', function () {
+  addEventButton.removeAttribute('disabled');
+  quickAddForm.style.display = 'none';
+  inputArea.value = '';
+});
 
 /***/ }),
 
@@ -52453,22 +52544,22 @@ __webpack_require__.r(__webpack_exports__);
 
  // Navigation buttons elements
 
-var previousMonthButton = document.getElementsByClassName('navigation__prev_month_button')[0];
-var nextMonthButton = document.getElementsByClassName('navigation__next_month_button')[0];
-var currentDayButton = document.getElementsByClassName('navigation__current_day_button')[0];
+var previousMonthButton = document.querySelector('.navigation__prev_month_button');
+var nextMonthButton = document.querySelector('.navigation__next_month_button');
+var currentDayButton = document.querySelector('.navigation__current_day_button');
 var currentDate = new Date(Date.now());
 var targetDate = currentDate;
 var monthsOfTheYear = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
 var renderCalendar = function renderCalendar() {
   var date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Date.now();
-  var navigationArea = document.getElementsByClassName('navigation__current_month')[0];
-  var calendarArea = document.getElementsByClassName('calendar__calendar_table')[0];
+  var navigationArea = document.querySelector('.navigation__current_month');
+  var calendarArea = document.querySelector('.calendar__calendar_table');
   var targetMonth = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getMonth"])(date);
   var targetYear = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["getYear"])(date);
   navigationArea.textContent = "".concat(monthsOfTheYear[targetMonth], " ").concat(targetYear);
 
-  if (calendarArea !== undefined) {
+  if (calendarArea !== null) {
     calendarArea.remove();
   }
 
@@ -52532,9 +52623,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var inputSearchForm = document.getElementsByClassName('header__search_area')[0];
-var resultsMenu = document.getElementsByClassName('search_results')[0];
-var closeButton = document.getElementsByClassName('header__search_form_close_button')[0];
+var inputSearchForm = document.querySelector('.header__search_area');
+var resultsMenu = document.querySelector('.search_results');
+var closeButton = document.querySelector('.header__search_form_close_button');
 
 var parseLocalStorage = function parseLocalStorage(storage) {
   var result = [];
@@ -52631,7 +52722,7 @@ var createResultElement = function createResultElement(data) {
 
 var dynamicSearch = function dynamicSearch(storage) {
   var searchExpression = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-  var outputArea = document.getElementsByClassName('search_results')[0];
+  var outputArea = document.querySelector('.search_results');
   outputArea.innerHTML = '';
   var parsedStorageData = parseLocalStorage(storage);
   var normolizedStorageData = normolizeStorage(parsedStorageData);

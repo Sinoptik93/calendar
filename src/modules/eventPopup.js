@@ -2,7 +2,7 @@ import { parseISO, format, formatISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import generateCalendar from './calendarGenerator.js';
 
-const main = document.getElementsByClassName('calendar')[0];
+const main = document.querySelector('.calendar');
 const popupForm = document.createElement('div');
 const popupHTML = `
   <div class="task_adjunction_popup">
@@ -23,7 +23,7 @@ const popupHTML = `
 `;
 
 const closeForm = (form) => {
-  const formattingCell = document.getElementsByClassName('calendar__cell_formating')[0];
+  const formattingCell = document.querySelector('.calendar__cell_formating');
   formattingCell.classList.remove('calendar__cell_formating');
   form.remove();
 };
@@ -52,7 +52,7 @@ const showEventPopup = (cellDate = Date.now()) => {
 
   const markedCell = document.querySelector(`[data-date="${formatISO(cellDate, { representation: 'date' })}"]`);
   markedCell.classList.add('calendar__cell_formating');
-  const formDateArea = document.getElementsByClassName('task_adjunction_popup__task_date')[0];
+  const formDateArea = document.querySelector('.task_adjunction_popup__task_date');
   // Input form style
   const localizedDate = format(cellDate, 'd, MMMM, yyyy', { locale: ru }); // #1
   // const localizedDate = format(cellDate, 'd MMMM yyyy', { locale: ru }) // #2
@@ -79,25 +79,25 @@ const showEventPopup = (cellDate = Date.now()) => {
     styledTaskDescription.setAttribute('class', 'task_adjunction_popup__styled_description');
     styledTaskDescription.textContent = data.taskDescription;
 
-    // document.getElementsByName('task_name')[0].replaceWith(styledTaskName);
+    // document.querySelector('.task_name').replaceWith(styledTaskName);
     document.getElementsByName('task_name')[0].value = data.taskName;
     document.getElementsByName('members')[0].value = data.taskMembers;
     document.getElementsByName('description')[0].value = data.taskDescription;
   }
 
-  const closeButton = document.getElementsByClassName('task_adjunction_popup__close_button')[0];
+  const closeButton = document.querySelector('.task_adjunction_popup__close_button');
   closeButton.addEventListener('click', () => {
     closeForm(popupForm);
   });
 
-  const acceptButton = document.getElementsByClassName('task__adjunction_popup__accept_button')[0];
+  const acceptButton = document.querySelector('.task__adjunction_popup__accept_button');
   acceptButton.addEventListener('click', (event) => {
     event.preventDefault();
     generateLocalState();
     generateCalendar(cellDate);
   });
 
-  const deleteButton = document.getElementsByClassName('task__adjunction_popup__delete_button')[0];
+  const deleteButton = document.querySelector('.task__adjunction_popup__delete_button');
   deleteButton.addEventListener('click', (event) => {
     event.preventDefault();
     localStorage.removeItem(unifiedCellDate);

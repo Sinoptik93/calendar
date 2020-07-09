@@ -1,11 +1,11 @@
 import { format, parseISO } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import renderCalendar from './renderCalendar.js'
+import renderCalendar from './renderCalendar.js';
 import showEventPopup from './eventPopup.js';
 
-const inputSearchForm = document.getElementsByClassName('header__search_area')[0];
-const resultsMenu = document.getElementsByClassName('search_results')[0];
-const closeButton = document.getElementsByClassName('header__search_form_close_button')[0];
+const inputSearchForm = document.querySelector('.header__search_area');
+const resultsMenu = document.querySelector('.search_results');
+const closeButton = document.querySelector('.header__search_form_close_button');
 
 const parseLocalStorage = (storage) => {
   const result = [];
@@ -80,7 +80,7 @@ const createResultElement = (data) => {
 };
 
 const dynamicSearch = (storage, searchExpression = '') => {
-  const outputArea = document.getElementsByClassName('search_results')[0];
+  const outputArea = document.querySelector('.search_results');
   outputArea.innerHTML = '';
 
   const parsedStorageData = parseLocalStorage(storage);

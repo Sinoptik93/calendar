@@ -2,9 +2,9 @@ import { getMonth, getYear, setMonth } from 'date-fns';
 import generateCalendar from './calendarGenerator.js';
 
 // Navigation buttons elements
-const previousMonthButton = document.getElementsByClassName('navigation__prev_month_button')[0];
-const nextMonthButton = document.getElementsByClassName('navigation__next_month_button')[0];
-const currentDayButton = document.getElementsByClassName('navigation__current_day_button')[0];
+const previousMonthButton = document.querySelector('.navigation__prev_month_button');
+const nextMonthButton = document.querySelector('.navigation__next_month_button');
+const currentDayButton = document.querySelector('.navigation__current_day_button');
 
 const currentDate = new Date(Date.now());
 let targetDate = currentDate;
@@ -25,14 +25,14 @@ const monthsOfTheYear = [
 ];
 
 const renderCalendar = (date = Date.now()) => {
-  const navigationArea = document.getElementsByClassName('navigation__current_month')[0];
-  const calendarArea = document.getElementsByClassName('calendar__calendar_table')[0];
+  const navigationArea = document.querySelector('.navigation__current_month');
+  const calendarArea = document.querySelector('.calendar__calendar_table');
   const targetMonth = getMonth(date);
   const targetYear = getYear(date);
 
   navigationArea.textContent = `${monthsOfTheYear[targetMonth]} ${targetYear}`;
 
-  if (calendarArea !== undefined) {
+  if (calendarArea !== null) {
     calendarArea.remove();
   }
   generateCalendar(date);

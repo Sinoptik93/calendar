@@ -55,9 +55,9 @@ const createTaskCell = (inputDate, dayOfTheWeek = null) => {
   cellBody.appendChild(cellTaskBody);
 
   // Popup event listener for each cell
-  cellBody.addEventListener('click', (event) => {
-    const cellDate = parseISO(cellBody.getAttribute('data-date'));
-    showEventPopup(cellDate);
+  cellBody.addEventListener('click', () => {
+    const parsedCellDate = parseISO(cellBody.getAttribute('data-date'));
+    showEventPopup(parsedCellDate);
   });
 
   return cellBody;
